@@ -1,0 +1,57 @@
+#!make
+
+# modified by lihw 12/09/2006
+# to make more contract
+
+
+##### SRC FILES #####
+ 
+TARGET = ../bin/glui_template.app/Contents/MacOS/glui_template
+
+##### Compiler Option #####
+
+CXX=g++
+
+
+OBJS=glui_build.o \
+	glui_draw.o \
+	glui_key.o \
+	glui_mouse.o \
+	dumpscreen.o \
+	glui_template.o \
+	pnm.o \
+	common.o
+
+INCDIRS = -I../include
+LIBDIRS = -L../lib/mac
+
+
+CXXFLAGS=$(INCDIRS) -Wall -ggdb
+LIBS = $(LIBDIRS) -framework GLUT -framework OpenGL -lobjc -lglui -lm
+
+####### Implicit Rules ######
+
+.SUFFIXES: .c .o .cpp .cc .cxx .C
+
+.cpp.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<
+
+.cc.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<
+
+##### Targets ######
+
+default: $(TARGET)
+
+$(TARGET) : $(OBJS)
+	ranlib ../lib/mac/libglui.a
+	$(CXX) -o $(TARGET) -O2 $(OBJS) $(LIBS)
+
+
+##### clean up #####
+
+realclean:
+	rm *.o $(TARGET)
+
+clean:
+	rm *.o

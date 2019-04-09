@@ -1,0 +1,40 @@
+##### TARGETS #####
+
+default: $(TARGET)
+
+glui_build.o : glui_build.cpp
+	$(CC) -c glui_build.cpp $(INCDIRS)
+
+glui_draw.o : glui_draw.cpp
+	$(CC) -c glui_draw.cpp $(INCDIRS)
+
+glui_key.o : glui_key.cpp
+	$(CC) -c glui_key.cpp $(INCDIRS)
+
+glui_mouse.o : glui_mouse.cpp
+	$(CC) -c glui_mouse.cpp $(INCDIRS)
+
+dumpscreen.o : dumpscreen.cpp
+	$(CC) -c dumpscreen.cpp $(INCDIRS)
+
+glui_template.o : glui_template.cpp
+	$(CC) -c glui_template.cpp $(INCDIRS)
+
+pnm.o : pnm.c
+	$(cc) -c pnm.c $(INCDIRS)
+
+common.o : common.cpp
+	$(cc) -c common.cpp $(INCDIRS)
+
+$(TARGET) : glui_build.o glui_draw.o glui_key.o glui_mouse.o dumpscreen.o glui_template.o pnm.o common.o
+	$(CC) -o $(TARGET) $(CFLAGS) glui_build.o glui_draw.o glui_key.o glui_mouse.o dumpscreen.o glui_template.o pnm.o common.o $(LIBS)
+
+
+
+##### clean up #####
+
+realclean:
+	rm *.o $(TARGET)
+
+clean:
+	rm *.o

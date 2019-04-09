@@ -1,0 +1,38 @@
+#!make
+
+
+##### SRC FILES #####
+
+TARGET = ../bin/glui_template.linux
+
+
+##### Compiler Option #####
+
+CC = g++
+cc = gcc
+
+CFLAGS = -O2
+
+
+##### INCLUDES AND LIBS #####
+
+GL_INCDIR = /l/glut/include
+
+INCDIRS = -I$(GL_INCDIR) -I../include
+#LIBDIRS = -L/l/glut/lib -L../lib/linux -L/usr/X11R6/lib
+LIBDIRS = -L/usr/X11R6/lib /usr/X11R6/lib/libglut.so.3 -L../lib/linux
+#-L/usr/X11R6/lib
+
+MYLIB  = -lglui
+
+#GLLIBS = -L/l/glut/lib -lglut -lGLU -lGL
+GLLIBS = -lGLU -lGL
+XLIBS  = -lXi -lXmu
+MLIB   = -lm
+
+LIBS = $(LIBDIRS) $(MYLIB) $(GLLIBS) $(XLIBS) $(MLIB)
+
+
+##### COMMON RULES #####
+
+include commonrules
