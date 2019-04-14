@@ -80,6 +80,7 @@
   int perspective = 1;
 
   // viewing
+  int draw2D = 0;
   float currFovy;
   float currAspect;
 

@@ -102,6 +102,7 @@
   extern int   xySelected;
   extern int   yzSelected;
   extern int   xzSelected;
+  extern int   draw2D;
 
   // external grid
 
@@ -523,120 +524,123 @@ motion ( int x, int y )
 	  /////////////////////////////////////////
 	  // 1) ROTATION AROUND THE VIEWPOINT
 
-/*	  case GLUT_ACTIVE_ALT :
+	  case GLUT_ACTIVE_ALT :
 
-	    // Rotation
-	    nx = -dy;
-	    ny =  dx;
-	    scale = sqrt(nx*nx + ny*ny);
+		  if (!draw2D) {
+			  // Rotation
+			  nx = -dy;
+			  ny = dx;
+			  scale = sqrt(nx*nx + ny*ny);
 
-	    if (scale > 0.0f) {
+			  if (scale > 0.0f) {
 
-		if (accelerator > 1.0001f)
-		resetStatusBar("rotation about the viewpoint (accelerated).");
-		else
-		if (accelerator < 0.9999f)
-		resetStatusBar("rotation about the viewpoint (moderate).");
-		else
-		resetStatusBar("rotation about the viewpoint.");
+				  if (accelerator > 1.0001f)
+					  resetStatusBar("rotation about the viewpoint (accelerated).");
+				  else
+					  if (accelerator < 0.9999f)
+						  resetStatusBar("rotation about the viewpoint (moderate).");
+					  else
+						  resetStatusBar("rotation about the viewpoint.");
 
-		glGetFloatv(GL_MODELVIEW_MATRIX,mat);
-		glLoadIdentity();
+				  glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+				  glLoadIdentity();
 
-		nx    = nx / scale;
-		ny    = ny / scale;
-		angle = scale * 0.1f * currFovy/90.0f * accelerator;
+				  nx = nx / scale;
+				  ny = ny / scale;
+				  angle = scale * 0.1f * currFovy / 90.0f * accelerator;
 
-		glRotatef(angle,nx,ny,0.0f);
-		glMultMatrixf(mat);
+				  glRotatef(angle, nx, ny, 0.0f);
+				  glMultMatrixf(mat);
 
-		glutPostRedisplay();
-	    }
+				  glutPostRedisplay();
+			  }
 
-	    break;
+			  break;
+		  }
+		  else {
 
+			  if (accelerator > 1.0001f)
+				  resetStatusBar("changing fovy (accelerated).");
+			  else
+				if (accelerator < 0.9999f)
+					  resetStatusBar("changing fovy (moderate).");
+				  else
+					  resetStatusBar("changing fovy.");
+
+			  // update fovy
+			  updateFovyBy(-dx*1000.0f*accelerator / ((double)winH));
+
+			  // update Projection
+			  resetProj();
+
+			  // sync currFovy for GLUI
+			  glui->sync_live();
+
+			  glutPostRedisplay();
+			  break;
+		  }
 
 	  /////////////////////////////////////////
 	  // 2) ROTATING THE MODEL
 
 	  default :
+		  if (!draw2D) {
+			  // Rotation
+			  nx = -dy;
+			  ny = dx;
+			  scale = sqrt(nx*nx + ny*ny);
 
-	    // Rotation
-	    nx = -dy;
-	    ny =  dx;
-	    scale = sqrt(nx*nx + ny*ny);
+			  if (scale > 0.0f) {
 
-	    if (scale > 0.0f) {
+				  if (accelerator > 1.0001f)
+					  resetStatusBar("arcball rotation about the model (accelerated).");
+				  else
+					  if (accelerator < 0.9999f)
+						  resetStatusBar("arcball rotation about the model (moderate).");
+					  else
+						  resetStatusBar("arcball rotation about the model.");
 
-		if (accelerator > 1.0001f)
-		resetStatusBar("arcball rotation about the model (accelerated).");
-		else
-		if (accelerator < 0.9999f)
-		resetStatusBar("arcball rotation about the model (moderate).");
-		else
-		resetStatusBar("arcball rotation about the model.");
+				  glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+				  glLoadIdentity();
 
-		glGetFloatv(GL_MODELVIEW_MATRIX,mat);
-		glLoadIdentity();
+				  nx = nx / scale;
+				  ny = ny / scale;
+				  angle = scale * 0.2f * accelerator;
 
-		nx    = nx / scale;
-		ny    = ny / scale;
-		angle = scale * 0.2f * accelerator;
+				  glTranslatef(mat[12], mat[13], mat[14]);
+				  glRotatef(angle, nx, ny, 0.0f);
+				  glTranslatef(-mat[12], -mat[13], -mat[14]);
+				  glMultMatrixf(mat);
 
-		glTranslatef(mat[12],mat[13],mat[14]);
-		glRotatef(angle,nx,ny,0.0f); 
-		glTranslatef(-mat[12],-mat[13],-mat[14]);
-		glMultMatrixf(mat);
+				  glutPostRedisplay();
+			  }
+			  break;
+		  }
+		  else {
 
-		glutPostRedisplay();
-	    }*/
+			  /////////////////////////////////////////
+			  // 1) CHANGE FOVY
 
-		/////////////////////////////////////////
-		// 1) CHANGE FOVY
+		  if (accelerator > 1.0001f)
+			  resetStatusBar("XY translating the model (accelerated).");
+		  else
+			  if (accelerator < 0.9999f)
+				  resetStatusBar("XY translating the model (moderate).");
+			  else
+				  resetStatusBar("XY translating the model.");
 
-		case GLUT_ACTIVE_ALT:
+		  // Translation XY
+		  tx = 0.01f * dx * accelerator;
+		  ty = 0.01f * dy * accelerator;
 
-		if (accelerator > 1.0001f)
-			resetStatusBar("changing fovy (accelerated).");
-		else
-			if (accelerator < 0.9999f)
-				resetStatusBar("changing fovy (moderate).");
-			else
-				resetStatusBar("changing fovy.");
+		  glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+		  glLoadIdentity();
+		  glTranslatef(tx, ty, 0.0f);
+		  glMultMatrixf(mat);
 
-		// update fovy
-		updateFovyBy(-dx*1000.0f*accelerator / ((double)winH));
-
-		// update Projection
-		resetProj();
-
-		// sync currFovy for GLUI
-		glui->sync_live();
-
-		glutPostRedisplay();
-		break;
-
-		default:
-
-		if (accelerator > 1.0001f)
-			resetStatusBar("XY translating the model (accelerated).");
-		else
-			if (accelerator < 0.9999f)
-				resetStatusBar("XY translating the model (moderate).");
-			else
-				resetStatusBar("XY translating the model.");
-
-		// Translation XY
-		tx = 0.01f * dx * accelerator;
-		ty = 0.01f * dy * accelerator;
-
-		glGetFloatv(GL_MODELVIEW_MATRIX, mat);
-		glLoadIdentity();
-		glTranslatef(tx, ty, 0.0f);
-		glMultMatrixf(mat);
-
-		glutPostRedisplay();
-		break;
+		  glutPostRedisplay();
+		  break;
+		  }
 	}
 
 	break;
@@ -650,34 +654,59 @@ motion ( int x, int y )
 
 	switch (myMouseModifiers) {
 
+	case GLUT_ACTIVE_ALT:
+
+		if (!draw2D)
+		{
+			if (accelerator > 1.0001f)
+				resetStatusBar("changing fovy (accelerated).");
+			else
+				if (accelerator < 0.9999f)
+					resetStatusBar("changing fovy (moderate).");
+				else
+					resetStatusBar("changing fovy.");
+
+			// update fovy
+			updateFovyBy(dx*10.0f*accelerator / ((double)winH));
+
+			// update Projection
+			resetProj();
+
+			// sync currFovy for GLUI
+			glui->sync_live();
+
+			glutPostRedisplay();
+		}
+		break;
 
 
 
+		/////////////////////////////////////////
+		// 2) TRANSLATING (XY)
 
-	  /////////////////////////////////////////
-	  // 2) TRANSLATING (XY)
+	default:
+		if (!draw2D)
+		{
+			if (accelerator > 1.0001f)
+				resetStatusBar("XY translating the model (accelerated).");
+			else
+				if (accelerator < 0.9999f)
+					resetStatusBar("XY translating the model (moderate).");
+				else
+					resetStatusBar("XY translating the model.");
 
-/*	  default :
+			// Translation XY
+			tx = 0.05f * dx * accelerator;
+			ty = 0.05f * dy * accelerator;
 
-	    if (accelerator > 1.0001f)
-	    resetStatusBar("XY translating the model (accelerated).");
-	    else
-	    if (accelerator < 0.9999f)
-	    resetStatusBar("XY translating the model (moderate).");
-	    else
-	    resetStatusBar("XY translating the model.");
+			glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+			glLoadIdentity();
+			glTranslatef(tx, ty, 0.0f);
+			glMultMatrixf(mat);
 
-	    // Translation XY
-	    tx = 0.05f * dx * accelerator;
-	    ty = 0.05f * dy * accelerator;
-
-	    glGetFloatv(GL_MODELVIEW_MATRIX,mat);
-	    glLoadIdentity();
-	    glTranslatef(tx, ty, 0.0f);
-	    glMultMatrixf(mat);
-
-	    glutPostRedisplay();
-	    break;*/
+			glutPostRedisplay();
+		}
+		break;
 	}
 
 	break;
@@ -692,26 +721,28 @@ motion ( int x, int y )
 	/////////////////////////////////////////
 	// 1) TRANSLATING (XZ)
 
-	if (accelerator > 1.0001f)
-	resetStatusBar("XZ translating the model (accelerated).");
-	else
-	if (accelerator < 0.9999f)
-	resetStatusBar("XZ translating the model (moderate).");
-	else
-	resetStatusBar("XZ translating the model.");
+		  if (!draw2D)
+		  {
+			  if (accelerator > 1.0001f)
+				  resetStatusBar("XZ translating the model (accelerated).");
+			  else
+				  if (accelerator < 0.9999f)
+					  resetStatusBar("XZ translating the model (moderate).");
+				  else
+					  resetStatusBar("XZ translating the model.");
 
-	tx =  0.05f * dx * accelerator;
-	tz = -0.05f * dy * accelerator;
+			  tx = 0.05f * dx * accelerator;
+			  tz = -0.05f * dy * accelerator;
 
-	glGetFloatv(GL_MODELVIEW_MATRIX,mat);
-	glLoadIdentity();
-	glTranslatef(tx, 0.0f, tz);
-	glMultMatrixf(mat);
+			  glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+			  glLoadIdentity();
+			  glTranslatef(tx, 0.0f, tz);
+			  glMultMatrixf(mat);
 
-	glutPostRedisplay();
+			  glutPostRedisplay();
+		  }
 	break;
     }
-
 
     if (winID != mainWindowID)
 	glutSetWindow(winID);
@@ -877,7 +908,7 @@ idle ( void )
     if ( glutGetWindow() != mainWindowID )
         glutSetWindow(mainWindowID);
 
-
+	/*
     ////////////////////////////////////////////////////////////////////
     // Idle Rotation
 
@@ -940,8 +971,10 @@ idle ( void )
 	idleRot_time = currTime;
 
     } else
+	*/
 	if (preMouse2X != -1)
 	    preMouse2X  = -1;		// preMouse2X serves as a flag
+
 }
 
 

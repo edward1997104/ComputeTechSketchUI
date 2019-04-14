@@ -51,6 +51,7 @@
   extern int   showAxes;
   extern int   showStatusBar;
 
+  extern int   draw2D;
   extern int   xySelected;
   extern int   yzSelected;
   extern int   xzSelected;
@@ -63,6 +64,9 @@
 
   // perspective
   extern int perspective;
+
+  // line history
+  extern LineSetHistory_t * lineHistoryStack;
 
   //////////////////////////////////////////////
   // (B) Internal
@@ -292,11 +296,11 @@ addBasicPanel(GLUI_Panel *basicAdjPanel)
 
     glui->add_separator_to_panel(basicAdjPanel,false,2);
 
-    /*glui->add_checkbox_to_panel( basicAdjPanel,
+    glui->add_checkbox_to_panel( basicAdjPanel,
 	                         "show axes (a)",
 	                         &showAxes,
 	                         ID_SHOWAXES,
-	                         callbackGLUI ); */
+	                         callbackGLUI );
 
 
     //////////////////////////////////////////////
@@ -346,10 +350,15 @@ addAppPanel(GLUI_Panel *panel)
 {
     glui->add_separator_to_panel(panel,false,1);
 
-	/*
+
 	///////////////////////////////////////////
 	// select xy-plane checkbox
-
+	glui->add_separator_to_panel(panel, false, 2);
+	xyCheckbox = glui->add_checkbox_to_panel(panel,
+		"Using 2D Drawing",
+		&draw2D,
+		ID_TOGGLE_DRAW,
+		callbackGLUI);
 
 	glui->add_separator_to_panel(panel,false,2);
 	xyCheckbox = glui->add_checkbox_to_panel( panel,
@@ -444,7 +453,7 @@ addAppPanel(GLUI_Panel *panel)
 
 
     glui->add_separator_to_panel(panel,false,2);
-	*/
+
 	///////////////////////////////////////////
 	// line set list
 
@@ -757,12 +766,19 @@ callbackGLUI(int id)
 		  undoAction();
 		  break;
 	  case ID_OUTPUT:
-		  // Here for the callback needed to be filled in
 		  outputLineSet();
 		  break;
 	  case ID_PERSPECTIVE:
 		  resetView();
 		  glutPostRedisplay();
+		  break;
+	  case ID_TOGGLE_DRAW:
+		  if (draw2D)
+		  {
+			  resetView();
+//			  while (!lineHistoryStack->history.empty())
+//				  undoAction();
+		  }
 		  break;
     }
 
