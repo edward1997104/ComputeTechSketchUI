@@ -292,11 +292,11 @@ addBasicPanel(GLUI_Panel *basicAdjPanel)
 
     glui->add_separator_to_panel(basicAdjPanel,false,2);
 
-    glui->add_checkbox_to_panel( basicAdjPanel,
+    /*glui->add_checkbox_to_panel( basicAdjPanel,
 	                         "show axes (a)",
 	                         &showAxes,
 	                         ID_SHOWAXES,
-	                         callbackGLUI );
+	                         callbackGLUI ); */
 
 
     //////////////////////////////////////////////
@@ -346,7 +346,7 @@ addAppPanel(GLUI_Panel *panel)
 {
     glui->add_separator_to_panel(panel,false,1);
 
-
+	/*
 	///////////////////////////////////////////
 	// select xy-plane checkbox
 
@@ -444,7 +444,7 @@ addAppPanel(GLUI_Panel *panel)
 
 
     glui->add_separator_to_panel(panel,false,2);
-
+	*/
 	///////////////////////////////////////////
 	// line set list
 
@@ -757,6 +757,7 @@ callbackGLUI(int id)
 		  undoAction();
 		  break;
 	  case ID_OUTPUT:
+		  // Here for the callback needed to be filled in
 		  outputLineSet();
 		  break;
 	  case ID_PERSPECTIVE:

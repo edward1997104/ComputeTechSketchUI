@@ -25,7 +25,7 @@
 //////////////////////////
 // INTERNAL
 
-int xySelected;
+int xySelected = 1;
 int yzSelected;
 int xzSelected;
 

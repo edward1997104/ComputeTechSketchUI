@@ -436,6 +436,15 @@ mouse ( int button, int state, int x, int y )
     preMouseY = y;
 	//getMouseWorldPos(preMouseX, preMouseY);
 	//printf("preMouseX :%d, preMouseY: %d\n", preMouseX, preMouseY);
+
+	// Zoom in/out if the state is 3 or 4
+	// Wheel reports as button 3(scroll up) and button 4(scroll down)
+	if ((button == 3) || (button == 4)) // It's a wheel event
+	{
+		// Each wheel event reports like a button click, GLUT_DOWN then GLUT_UP
+		if (state == GLUT_UP) return; // Disregard redundant GLUT_UP events
+		printf("Scroll %s At %d %d\n", (button == 3) ? "Up" : "Down", x, y);
+	}
 }
 
 
@@ -514,7 +523,7 @@ motion ( int x, int y )
 	  /////////////////////////////////////////
 	  // 1) ROTATION AROUND THE VIEWPOINT
 
-	  case GLUT_ACTIVE_ALT :
+/*	  case GLUT_ACTIVE_ALT :
 
 	    // Rotation
 	    nx = -dy;
@@ -580,7 +589,54 @@ motion ( int x, int y )
 		glMultMatrixf(mat);
 
 		glutPostRedisplay();
-	    }
+	    }*/
+
+		/////////////////////////////////////////
+		// 1) CHANGE FOVY
+
+		case GLUT_ACTIVE_ALT:
+
+		if (accelerator > 1.0001f)
+			resetStatusBar("changing fovy (accelerated).");
+		else
+			if (accelerator < 0.9999f)
+				resetStatusBar("changing fovy (moderate).");
+			else
+				resetStatusBar("changing fovy.");
+
+		// update fovy
+		updateFovyBy(-dx*1000.0f*accelerator / ((double)winH));
+
+		// update Projection
+		resetProj();
+
+		// sync currFovy for GLUI
+		glui->sync_live();
+
+		glutPostRedisplay();
+		break;
+
+		default:
+
+		if (accelerator > 1.0001f)
+			resetStatusBar("XY translating the model (accelerated).");
+		else
+			if (accelerator < 0.9999f)
+				resetStatusBar("XY translating the model (moderate).");
+			else
+				resetStatusBar("XY translating the model.");
+
+		// Translation XY
+		tx = 0.01f * dx * accelerator;
+		ty = 0.01f * dy * accelerator;
+
+		glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+		glLoadIdentity();
+		glTranslatef(tx, ty, 0.0f);
+		glMultMatrixf(mat);
+
+		glutPostRedisplay();
+		break;
 	}
 
 	break;
@@ -595,36 +651,13 @@ motion ( int x, int y )
 	switch (myMouseModifiers) {
 
 
-	  /////////////////////////////////////////
-	  // 1) CHANGE FOVY
 
-	  case GLUT_ACTIVE_ALT :
-
-	    if (accelerator > 1.0001f)
-	    resetStatusBar("changing fovy (accelerated).");
-	    else
-	    if (accelerator < 0.9999f)
-	    resetStatusBar("changing fovy (moderate).");
-	    else
-	    resetStatusBar("changing fovy.");
-
-	    // update fovy
-	    updateFovyBy(dx*10.0f*accelerator/((double)winH));
-
-	    // update Projection
-	    resetProj();
-
-	    // sync currFovy for GLUI
-	    glui->sync_live();
-
-	    glutPostRedisplay();
-	    break;
 
 
 	  /////////////////////////////////////////
 	  // 2) TRANSLATING (XY)
 
-	  default :
+/*	  default :
 
 	    if (accelerator > 1.0001f)
 	    resetStatusBar("XY translating the model (accelerated).");
@@ -644,7 +677,7 @@ motion ( int x, int y )
 	    glMultMatrixf(mat);
 
 	    glutPostRedisplay();
-	    break;
+	    break;*/
 	}
 
 	break;

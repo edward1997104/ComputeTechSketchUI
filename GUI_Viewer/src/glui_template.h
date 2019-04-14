@@ -64,12 +64,8 @@
   // Help Menu
   #ifdef _WIN32
   #define _HELP_MESSAGE "  Mouse Control\n\n\
-left        : rotate the world\n\
-  + ALT    : rotate at viewpoint\n\
-middle      : xy-translation\n\
+left        : xy-translation\n\
    + ALT    : changing fovy\n\
-left+mid    : xz-translation\n\
-\n\
  + shift    : acceleration key\n\
  + ctrl     : deceleration key\n\
 right click : select as line end point\n\

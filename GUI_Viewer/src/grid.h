@@ -29,7 +29,7 @@
 // public constant
 ///////////////////////////////////////////////////////////////
 
-const double GRID_SIZE = 2.0;
+const double GRID_SIZE = 4.0;
 const double GRID_INTERVAL = 0.1;
 const double SNAP_THERSHOLD = 0.05;
 const double SNAP_TIME = 0.01;
