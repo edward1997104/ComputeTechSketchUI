@@ -5,7 +5,7 @@
 // Example to build a standard GLUI interface
 //
 // Philip Fu
-// 
+//
 ///////////////////////////////////////////////////////////////
 
 
@@ -63,9 +63,21 @@
 
   // Help Menu
   #ifdef _WIN32
-  #define _HELP_MESSAGE "  Mouse Control\n\n\
+  #define _HELP_MESSAGE "  2D Drawing:\n\n\
+  Mouse Control\n\n\
 left        : xy-translation\n\
    + ALT    : changing fovy\n\
+\n\
+ + shift    : acceleration key\n\
+ + ctrl     : deceleration key\n\
+ 3D Drawing:\n\n\
+ Mouse Control\n\n\
+left        : rotate the world\n\
+  + ALT    : rotate at viewpoint\n\
+middle      : xy-translation\n\
+   + ALT    : changing fovy\n\
+left+mid    : xz-translation\n\
+\n\
  + shift    : acceleration key\n\
  + ctrl     : deceleration key\n\
 right click : select as line end point\n\
