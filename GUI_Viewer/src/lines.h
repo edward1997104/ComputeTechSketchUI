@@ -59,7 +59,7 @@ extern void deleteSelectedLine();
 extern void undoAction();
 extern void selectLine(int x, int y);
 extern void outputLineSet();
-
+extern bool readLineSet(char* objFileName);
 Point_t * newPoint(double x, double y, double z);
 LineSetHistory_t * newLineSetHistory();
 

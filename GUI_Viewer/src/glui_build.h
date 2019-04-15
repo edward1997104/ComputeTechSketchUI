@@ -46,6 +46,7 @@
   #define ID_OUTPUT             33
   #define ID_PERSPECTIVE        34
   #define ID_TOGGLE_DRAW        35
+  #define ID_READ_SKETCH		36
 
   // Build the GLUI interface
   extern void initGLUI();

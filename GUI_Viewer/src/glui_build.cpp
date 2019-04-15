@@ -476,6 +476,9 @@ addAppPanel(GLUI_Panel *panel)
 
 	glui->add_edittext_to_panel(panel, "Output filename:", GLUI_EDITTEXT_TEXT, outputFilename, -1, callbackGLUI);
 
+	GLUI_Button *readSketchButton = glui->add_button_to_panel(panel, "Read Sketch", ID_READ_SKETCH, callbackGLUI);
+	glui->add_separator_to_panel(panel, false, 2);
+
 	///////////////////////////////////////////
 	// edit text
 	glui->add_separator_to_panel(panel, false, 2);
@@ -617,7 +620,56 @@ initGLUI()
     glutReshapeWindow(winW*2-tw,winH*2-th);
 }
 
+bool GetOpenFileName2(HWND hWnd, LPSTR szFile, int StringSize)
+{
+	OPENFILENAME   ofn;
+	char   szFileTitle[256];
+	strcpy(szFileTitle, "Open File");
+	szFile[0] = 0;
 
+	memset(&ofn, 0, sizeof(OPENFILENAME));
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = hWnd;
+	ofn.lpstrFilter = "All\0*.*\0.obj\0*.obj\0";
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = StringSize;
+	ofn.lpstrTitle = szFileTitle;
+	ofn.Flags = OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn) != TRUE)
+	{
+		DWORD   Errval;
+		char   Errstr[50] = "Common   Dialog   Error:   ";
+		char   buf[5];
+		Errval = CommDlgExtendedError();
+		if (Errval != 0)
+		{
+			wsprintf(buf, "%ld ", Errval);
+			strcat(Errstr, buf);
+			MessageBox(NULL, Errstr, "Warning ", MB_OK | MB_ICONSTOP);
+		}
+		return false;
+	}
+
+	return   true;
+}
+
+char* readFile()
+{
+	HWND hWnd = GetForegroundWindow();
+	char objFileName[256];
+
+	if (GetOpenFileName2(hWnd, objFileName, 256))
+	{
+		return objFileName;
+	}
+}
+
+void doReadSketch(){
+	char* filename = readFile();
+	bool result = readLineSet(filename);
+}
 
 
 ///////////////////////////////////////////////////////////////
@@ -780,6 +832,10 @@ callbackGLUI(int id)
 //				  undoAction();
 		  }
 		  break;
+	case ID_READ_SKETCH:
+		doReadSketch();
+		glutPostRedisplay();
+		break;
     }
 
 
