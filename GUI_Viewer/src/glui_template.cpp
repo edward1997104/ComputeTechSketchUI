@@ -92,8 +92,6 @@
   // LineSet Variable
   LineSet_t * currentLineSet;
   //////////////////////////
-    //Point Center
-  Point_t* centerPoint;
   // EXTERNAL
 
   extern GLUI * glui, *gluiStatusBar   ;

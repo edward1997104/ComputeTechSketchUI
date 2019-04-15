@@ -35,7 +35,6 @@ using namespace std;
 
 	extern LineSet_t * currentLineSet;
 	extern GLUI_Listbox * lineSetListbox;
-	extern Point_t* centerPoint;
 	//extern  Model myModel;
 
 	extern char outputFilename[100];
@@ -786,7 +785,6 @@ void readFromObjFile(string path)
 	double minZ = 0.0;
 	double maxZ = 0.0;
 
-
 	ifstream fin(path);
 	string line;
 	bool onceCal = true;
@@ -815,19 +813,6 @@ void readFromObjFile(string path)
 		}
 		else if (line.compare("") != 0 && line.at(0) == 'l')
 		{
-			if (onceCal){
-				centerPoint->x = (maxX + minX) / 2.0;
-				centerPoint->y = (maxY + minY) / 2.0;
-				centerPoint->z = (maxZ + minZ) / 2.0;
-				cout << centerPoint->x << "  " << centerPoint->y << " " << centerPoint->z << endl;
-				for (unsigned int i = 0; i < points->size(); i++){
-					Point_t* point = points->at(i);
-					point->x = point->x - centerPoint->x;
-					point->y = point->y - centerPoint->y;
-					point->z = point->z - centerPoint->z;
-				}
-				onceCal = false;
-			}
 			SplitString(line, ss, " ");
 			for (unsigned int i = 1; i<ss.size() - 1; i++)
 			{
