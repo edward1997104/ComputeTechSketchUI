@@ -67,6 +67,7 @@
   const float GRID_WIDTH = 2.0f;
   const float SELECTED_SPHERE_SIZE = 0.05f;
   const float POSSIBLE_SPHERE_SIZE = 0.02f;
+  GLuint rotation_tex = 0;
 void setRotationGridTexture()
   {
 	  GLuint tex_2d = SOIL_load_OGL_texture
