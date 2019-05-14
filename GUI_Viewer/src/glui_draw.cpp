@@ -33,6 +33,7 @@
 #include "lines.h"
 #include "glui_build.h"
 #include "glui.h"
+#include <SOIL.h>
 
 ///////////////////////////////////////////////////////////////
 // EXTERNAL VARIABLES
@@ -66,7 +67,26 @@
   const float GRID_WIDTH = 2.0f;
   const float SELECTED_SPHERE_SIZE = 0.05f;
   const float POSSIBLE_SPHERE_SIZE = 0.02f;
-
+void setRotationGridTexture()
+  {
+	  GLuint tex_2d = SOIL_load_OGL_texture
+		  (
+		  "arrow.png",
+		  SOIL_LOAD_AUTO,
+		  SOIL_CREATE_NEW_ID,
+		  SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		  );
+	  /* check for an error during the load process */
+	  if (0 == tex_2d)
+	  {
+		  printf("SOIL loading error: '%s'\n", SOIL_last_result());
+	  }
+	  else
+	  {
+		  printf("%s\n", SOIL_last_result());
+	  }
+	  rotation_tex = tex_2d;
+  }
 static void
 drawAxes()
 {
@@ -318,6 +338,57 @@ void drawSelectedPoint()
 		glEnable(GL_LIGHTING);
 	}
 }
+
+void drawRotationQuad(float x, float y, float z, float size, int axis)
+{
+	// axis : X : 0 , Y : 1 , Z: 2
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, rotation_tex);
+	glEnable(GL_LIGHTING);     // 启动光照
+	glBegin(GL_QUADS);
+	GLfloat lmodel_ambient[] = { 10.0, 10.0, 10.0, 10.0 };
+
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
+	if (axis == 0)
+	{
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(x, y - size, z - size);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(x, y - size, z + size);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f(x, y + size, z + size);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f(x, y + size, z - size);
+	}
+	else if (axis == 1)
+	{
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(x - size, y, z - size);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(x - size, y, z + size);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f(x + size, y, z + size);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f(x + size, y, z - size);
+	}
+	else if (axis == 2)
+	{
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(x - size, y - size, z);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(x - size, y + size, z);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f(x + size, y + size, z);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f(x + size, y - size, z);
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glEnd();
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+}
 ///////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS FOR OUTSIDE WORLD
 ///////////////////////////////////////////////////////////////
@@ -334,4 +405,6 @@ drawFrame()
 	drawLineSet();
 
 	drawSelectedPoint();
+
+	drawRotationQuad(0, 0, 0, 0.5f, 2);
 }

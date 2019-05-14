@@ -266,6 +266,7 @@ glInit()
 
 	currentLineSet = newLineSet();
 
+    setRotationGridTexture();
 }
 
 

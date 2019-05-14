@@ -9,7 +9,7 @@
 // 3/4/2003 2:22P
 //
 // All rights reserved
-// 
+//
 ///////////////////////////////////////////////////////////////
 
 
@@ -20,6 +20,6 @@
 
 
 extern void drawFrame ( ) ;
-
+extern void setRotationGridTexture() ;
 
 #endif
