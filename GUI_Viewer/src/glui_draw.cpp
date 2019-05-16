@@ -606,12 +606,12 @@ drawFrame()
 #endif 
 
 #ifdef ANNOT_LAMP
-	drawRotationQuad(-1.000000f, 0.000000f, 23.000000f, 0.1f, 1);
-	drawRotationQuad(1.000000f, 0.000000f, 23.000000f, 0.1f, 1);
-	drawRotationQuad(-1.000000f, 0.000000f, -1.000000f, 0.1f, 1);
-	drawRotationQuad(1.000000f, 0.000000f, -1.000000f, 0.1f, 1);
-	drawRotationQuad(-1.000000f, 0.000000f, 11.000000f, 0.1f, 1);
-	drawRotationQuad(1.000000f, 0.000000f, 11.000000f, 0.1f, 1);
+	drawRotationQuad(-1.000000f, -0.100000f, 23.000000f, 0.1f, 1);
+	drawRotationQuad(1.000000f, -0.100000f, 23.000000f, 0.1f, 1);
+	drawRotationQuad(-1.000000f, -0.100000f, -1.000000f, 0.1f, 1);
+	drawRotationQuad(1.000000f, -0.100000f, -1.000000f, 0.1f, 1);
+	drawRotationQuad(-1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
+	drawRotationQuad(1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
 #endif
 
 }
