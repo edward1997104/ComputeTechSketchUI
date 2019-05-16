@@ -108,8 +108,7 @@ drawAxes()
     glEnable(GL_LIGHTING);
 }
 
-static void
-drawPlane(int plane)
+static void drawPlane(int plane)
 {
 	int counter = 0;
 
@@ -136,24 +135,69 @@ drawPlane(int plane)
 	// show selected xy plane grid with interval delta
 
 
-	for (float current_line = -GRID_SIZE;
-		current_line <= GRID_SIZE + 10e-5;
-		current_line += GRID_INTERVAL)
-	{
-		if (counter % 5 == 0)
-			glLineWidth(GRID_WIDTH);
-		glBegin(GL_LINES);
-		glColor4f(0.8f, 0.0f, 0.0f, 0.3f);
-		glVertex3f(current_line, GRID_SIZE, xyGrid->offset);
-		glVertex3f(current_line, -GRID_SIZE, xyGrid->offset);
+	//for (float current_line = -GRID_SIZE;
+	//	current_line <= GRID_SIZE + 10e-5;
+	//	current_line += GRID_INTERVAL)
+	//{
+	//	if (counter % 5 == 0)
+	//		glLineWidth(GRID_WIDTH);
+	//	glBegin(GL_LINES);
 
-		glColor4f(0.8f, 0.0f, 0.0f, 0.3f);
-		glVertex3f(GRID_SIZE, current_line, xyGrid->offset);
-		glVertex3f(-GRID_SIZE, current_line, xyGrid->offset);
-		glEnd();
-		if (counter % 5 == 0)
+	//	float alpha = 0.4*(GRID_SIZE-abs(current_line)) / GRID_SIZE;// exp()
+
+	//	glColor4f(0.8f, 0.0f, 0.0f, alpha);
+	//	glVertex3f(current_line, GRID_SIZE, xyGrid->offset);
+	//	glVertex3f(current_line, -GRID_SIZE, xyGrid->offset);
+
+	//	glColor4f(0.8f, 0.0f, 0.0f, alpha);
+	//	glVertex3f(GRID_SIZE, current_line, xyGrid->offset);
+	//	glVertex3f(-GRID_SIZE, current_line, xyGrid->offset);
+	//	glEnd();
+	//	if (counter % 5 == 0)
+	//		glLineWidth(1.0);
+	//	counter++;
+	//}
+    //#define GRID_NUM 40
+	
+
+	for (int x = -GRID_NUM; x <= GRID_NUM; x++)
+	{
+
+		for (int y = -GRID_NUM; y <= GRID_NUM; y++)
+		{
+			float baseX = x * GRID_INTERVAL;
+			float baseY = y * GRID_INTERVAL;
+
+			float alpha = 0.4 * exp(- (baseX*baseX + baseY*baseY) / (GRID_NUM/3.5));// exp()
+
+
 			glLineWidth(1.0);
-		counter++;
+			if (abs(y) % 5 == 0)	glLineWidth(2.0);
+
+			glBegin(GL_LINES);
+
+			if (x != GRID_NUM){
+				//horizontal line
+				glColor4f(0.8f, 0.0f, 0.0f, alpha);
+				glVertex3f(baseX, baseY, xyGrid->offset);
+				glVertex3f(baseX + GRID_INTERVAL, baseY, xyGrid->offset);
+			}
+			glEnd();
+
+			glLineWidth(1.0);
+			if (abs(x) % 5 == 0)	glLineWidth(2.0);
+
+			glBegin(GL_LINES);
+
+			
+			if (y != GRID_NUM){
+				//vertical line
+				glColor4f(0.8f, 0.0f, 0.0f, alpha);
+				glVertex3f(baseX, baseY, xyGrid->offset);
+				glVertex3f(baseX, baseY + GRID_INTERVAL, xyGrid->offset);
+			}
+			glEnd();
+		}
 	}
 
 
@@ -180,25 +224,65 @@ drawPlane(int plane)
 	///////////////////////////////////////////////////////////////
 	// show selected yz plane grid with interval delta
 
-	for (float current_line = -GRID_SIZE;
-		current_line <= GRID_SIZE + 10e-5;
-		current_line += GRID_INTERVAL)
+	//for (float current_line = -GRID_SIZE;
+	//	current_line <= GRID_SIZE + 10e-5;
+	//	current_line += GRID_INTERVAL)
+	//{
+	//	if (counter % 5 == 0)
+	//		glLineWidth(GRID_WIDTH);
+	//	glBegin(GL_LINES);
+	//	glColor4f(0.0f, 0.8f, 0.0f, 0.3f);
+	//	glVertex3f(yzGrid->offset, GRID_SIZE, current_line);
+	//	glVertex3f(yzGrid->offset, -GRID_SIZE, current_line);
+
+	//	glColor4f(0.0f, 0.8f, 0.0f, 0.3f);
+	//	glVertex3f(yzGrid->offset, current_line, GRID_SIZE);
+	//	glVertex3f(yzGrid->offset, current_line, -GRID_SIZE);
+	//	glEnd();
+	//	if (counter % 5 == 0)
+	//		glLineWidth(1.0);
+	//	counter++;
+
+	//}
+
+	for (int x = -GRID_NUM; x <= GRID_NUM; x++)
 	{
-		if (counter % 5 == 0)
-			glLineWidth(GRID_WIDTH);
-		glBegin(GL_LINES);
-		glColor4f(0.0f, 0.8f, 0.0f, 0.3f);
-		glVertex3f(yzGrid->offset, GRID_SIZE, current_line);
-		glVertex3f(yzGrid->offset, -GRID_SIZE, current_line);
 
-		glColor4f(0.0f, 0.8f, 0.0f, 0.3f);
-		glVertex3f(yzGrid->offset, current_line, GRID_SIZE);
-		glVertex3f(yzGrid->offset, current_line, -GRID_SIZE);
-		glEnd();
-		if (counter % 5 == 0)
+		for (int y = -GRID_NUM; y <= GRID_NUM; y++)
+		{
+			float baseX = x * GRID_INTERVAL;//y coord
+			float baseY = y * GRID_INTERVAL;//z coord
+
+			float alpha = 0.4 * exp(-(baseX*baseX + baseY*baseY) / (GRID_NUM / 3.5));// exp()
+
+
 			glLineWidth(1.0);
-		counter++;
+			if (abs(y) % 5 == 0)	glLineWidth(2.0);
 
+			glBegin(GL_LINES);
+
+			if (x != GRID_NUM){
+				//horizontal line
+				glColor4f(0.0f, 0.8f, 0.0f, alpha);
+				glVertex3f(yzGrid->offset,baseX, baseY );
+				glVertex3f(yzGrid->offset, baseX + GRID_INTERVAL, baseY);
+			}
+			glEnd();
+
+			glLineWidth(1.0);
+			if (abs(x) % 5 == 0)	glLineWidth(2.0);
+
+			glBegin(GL_LINES);
+
+
+			if (y != GRID_NUM){
+				//vertical line
+				glColor4f(0.0f, 0.8f, 0.0f, alpha);
+				glVertex3f(yzGrid->offset,baseX, baseY);
+				glVertex3f(yzGrid->offset, baseX, baseY + GRID_INTERVAL);
+			}
+			glEnd();
+		}
 	}
 
     glEnable(GL_LIGHTING);
@@ -225,7 +309,7 @@ drawPlane(int plane)
 	// show selected xz plane grid with interval delta
 
 
-	for (float current_line = -GRID_SIZE;
+	/*for (float current_line = -GRID_SIZE;
 		current_line <= GRID_SIZE + 10e-5;
 		current_line += GRID_INTERVAL)
 	{
@@ -246,12 +330,53 @@ drawPlane(int plane)
 			glLineWidth(1.0);
 		counter++;
 
+	}*/
+	for (int x = -GRID_NUM; x <= GRID_NUM; x++)
+	{
+
+		for (int y = -GRID_NUM; y <= GRID_NUM; y++)
+		{
+			float baseX = x * GRID_INTERVAL;
+			float baseY = y * GRID_INTERVAL;
+
+			float alpha = 0.4 * exp(-(baseX*baseX + baseY*baseY) / (GRID_NUM / 3.5));// exp()
+
+			glLineWidth(1.0);
+			if (abs(y) % 5 == 0)	glLineWidth(2.0);
+
+			glBegin(GL_LINES);
+
+			if (x != GRID_NUM){
+				//horizontal line
+				glColor4f(0.0f, 0.0f, 0.8f, alpha);
+				glVertex3f(baseX, xzGrid->offset, baseY);
+				glVertex3f(baseX + GRID_INTERVAL, xzGrid->offset, baseY);
+			}
+			glEnd();
+
+			glLineWidth(1.0);
+			if (abs(x) % 5 == 0)	glLineWidth(2.0);
+
+			glBegin(GL_LINES);
+
+
+			if (y != GRID_NUM){
+				//vertical line
+				glColor4f(0.0f, 0.0f, 0.8f, alpha);
+				glVertex3f(baseX, xzGrid->offset,baseY);
+				glVertex3f(baseX, xzGrid->offset, baseY + GRID_INTERVAL);
+			}
+			glEnd();
+		}
 	}
+
     glEnable(GL_LIGHTING);
 	break;
 
 	}
 }
+
+
 
 // draw the selected plane
 static void drawSelectedPlane()
