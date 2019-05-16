@@ -468,14 +468,18 @@ void drawSelectedPoint()
 void drawRotationQuad(float x, float y, float z, float size, int axis)
 {
 	// axis : X : 0 , Y : 1 , Z: 2
-
+	x*=0.1;
+	y*=0.1;
+	z*=0.1;
+	//glDisable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, rotation_tex);
-	glEnable(GL_LIGHTING);     // 启动光照
-	glBegin(GL_QUADS);
 	GLfloat lmodel_ambient[] = { 10.0, 10.0, 10.0, 10.0 };
-
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
+	glDepthMask( GL_FALSE );
+	glBegin(GL_QUADS);
+
+
 	if (axis == 0)
 	{
 		glTexCoord2f(0.0f, 0.0f);
@@ -509,15 +513,20 @@ void drawRotationQuad(float x, float y, float z, float size, int axis)
 		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(x + size, y - size, z);
 	}
-	glBindTexture(GL_TEXTURE_2D, 0);
 	glEnd();
-	glDisable(GL_LIGHTING);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	//glEnable(GL_LIGHTING);     // 启动光照
 	glDisable(GL_TEXTURE_2D);
+	glDepthMask( GL_TRUE );
 
 }
 ///////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS FOR OUTSIDE WORLD
 ///////////////////////////////////////////////////////////////
+
+//#define ANNOT_BIRD
+#define ANNOT_CROSSBOW
 
 void
 drawFrame()
@@ -532,5 +541,25 @@ drawFrame()
 
 	drawSelectedPoint();
 
-	drawRotationQuad(0, 0, 0, 0.5f, 2);
+#ifdef ANNOT_BIRD
+	drawRotationQuad(-7.8,-3, 1, 0.1f, 0);
+	drawRotationQuad(-7.8, 3, 1, 0.1f, 0);
+	drawRotationQuad(-7.8, 6, 1, 0.1f, 0);
+	drawRotationQuad(-7.8,-6, 1, 0.1f, 0);
+	drawRotationQuad(-3.8, 3, 1, 0.1f, 0);
+	drawRotationQuad(-3.8,-3, 1, 0.1f, 0);
+#endif
+
+#ifdef ANNOT_CROSSBOW
+	drawRotationQuad(8 , -2 ,3,  0.1f, 1);
+	drawRotationQuad(12, -2 ,3,  0.1f, 1);
+	drawRotationQuad(12, -2,10,  0.1f, 1);
+	drawRotationQuad(8 ,-2 ,10, 0.1f, 1);
+	drawRotationQuad(8 , 2  ,3,   0.1f, 1);
+	drawRotationQuad(12, 2 ,3,   0.1f, 1);
+	drawRotationQuad(8,  2, 10, 0.1f, 1);
+	drawRotationQuad(12, 2 ,10,  0.1f, 1);
+
+#endif
+
 }
