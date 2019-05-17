@@ -50,6 +50,7 @@
   extern float currFovy;
   extern int   showAxes;
   extern int   showStatusBar;
+  extern int   innerLighting;
 
   extern int   draw2D;
   extern int   xySelected;
@@ -302,6 +303,17 @@ addBasicPanel(GLUI_Panel *basicAdjPanel)
 	                         ID_SHOWAXES,
 	                         callbackGLUI );
 
+
+	//////////////////////////////////////////////
+	// Show/Hide inner lighting
+
+	glui->add_separator_to_panel(basicAdjPanel, false, 2);
+
+	glui->add_checkbox_to_panel(basicAdjPanel,
+		"inner lighting",
+		&innerLighting,
+		ID_INNERLIGHT,
+		callbackGLUI);
 
     //////////////////////////////////////////////
     // Change Background Colors
@@ -791,6 +803,14 @@ callbackGLUI(int id)
 	    resetStatusBar("hide axes");
 	glutPostRedisplay();
 	break;
+
+	case ID_INNERLIGHT:
+		if (innerLighting)
+			resetStatusBar("show inner light");
+		else
+			resetStatusBar("hide inner light");
+		glutPostRedisplay();
+		break;
 
 
       ////////////////////////////////////////////////////////////////////

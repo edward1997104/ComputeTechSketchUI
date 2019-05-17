@@ -47,7 +47,9 @@
   extern int xySelected;
   extern int yzSelected;
   extern int xzSelected;
-    
+  
+  extern int innerLighting;
+
   extern Grid_t * xyGrid;
   extern Grid_t * yzGrid;
   extern Grid_t * xzGrid;
@@ -424,19 +426,21 @@ drawLineSet()
 	glLineWidth(1.0);
 	glEnable(GL_LIGHTING);
 
-	for (unsigned int i = 0; i < currentLineSet->lineSet.size(); i++)
-	{
-		for (unsigned int j = 0; j < currentLineSet->lineSet[i]->intPoint.size(); j++)
+	if (innerLighting){
+		for (unsigned int i = 0; i < currentLineSet->lineSet.size(); i++)
 		{
-			glDisable(GL_LIGHTING);
-			glColor3f(0.902f, 0.902f, 0.980f);
-			glPushMatrix();
-			glTranslated(currentLineSet->lineSet[i]->intPoint[j]->x,
-				currentLineSet->lineSet[i]->intPoint[j]->y,
-				currentLineSet->lineSet[i]->intPoint[j]->z);
-			glutSolidSphere(POSSIBLE_SPHERE_SIZE, 50, 50);
-			glPopMatrix();
-			glEnable(GL_LIGHTING);
+			for (unsigned int j = 0; j < currentLineSet->lineSet[i]->intPoint.size(); j++)
+			{
+				glDisable(GL_LIGHTING);
+				glColor3f(0.902f, 0.902f, 0.980f);
+				glPushMatrix();
+				glTranslated(currentLineSet->lineSet[i]->intPoint[j]->x,
+					currentLineSet->lineSet[i]->intPoint[j]->y,
+					currentLineSet->lineSet[i]->intPoint[j]->z);
+				glutSolidSphere(POSSIBLE_SPHERE_SIZE, 50, 50);
+				glPopMatrix();
+				glEnable(GL_LIGHTING);
+			}
 		}
 	}
 
@@ -563,8 +567,9 @@ drawFrame()
 	drawRotationQuad(12, 2 ,3,   0.1f, 1);
 	drawRotationQuad(8,  2, 10, 0.1f, 1);
 	drawRotationQuad(12, 2 ,10,  0.1f, 1);
-
 #endif
+
+//////////////////////////////// Thanks to Prof. FU //////////////////////////////////
 
 #ifdef ANNOT_CLAW
 	drawRotationQuad(1.947100f, 2.100000f, -2.276200f, 0.1f, 1);

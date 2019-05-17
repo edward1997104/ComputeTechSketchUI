@@ -78,7 +78,7 @@
   int showAxes;
   int showStatusBar;
   int perspective = 1;
-
+  int innerLighting;
   // viewing
   int draw2D = 0;
   float currFovy;
