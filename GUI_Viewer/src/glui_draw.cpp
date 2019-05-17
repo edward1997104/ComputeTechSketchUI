@@ -61,6 +61,8 @@
 
   extern GLUI_Listbox * lineSetListbox;
 
+  extern unsigned int ANNOT_COUNT;
+
 ///////////////////////////////////////////////////////////////
 // INTERNAL FUNCTIONS
 ///////////////////////////////////////////////////////////////
@@ -550,73 +552,73 @@ drawFrame()
 	drawSelectedPoint();
 
 #ifdef ANNOT_BIRD
-	drawRotationQuad(-7.8,-3, 1, 0.1f, 0);
-	drawRotationQuad(-7.8, 3, 1, 0.1f, 0);
-	drawRotationQuad(-7.8, 6, 1, 0.1f, 0);
-	drawRotationQuad(-7.8,-6, 1, 0.1f, 0);
-	drawRotationQuad(-3.8, 3, 1, 0.1f, 0);
-	drawRotationQuad(-3.8,-3, 1, 0.1f, 0);
+	if(ANNOT_COUNT>0) drawRotationQuad(-7.8,-3, 1, 0.1f, 0);
+	if(ANNOT_COUNT>1) drawRotationQuad(-7.8, 3, 1, 0.1f, 0);
+	if(ANNOT_COUNT>2) drawRotationQuad(-7.8, 6, 1, 0.1f, 0);
+	if(ANNOT_COUNT>3) drawRotationQuad(-7.8,-6, 1, 0.1f, 0);
+	if(ANNOT_COUNT>4) drawRotationQuad(-3.8, 3, 1, 0.1f, 0);
+	if(ANNOT_COUNT>5) drawRotationQuad(-3.8,-3, 1, 0.1f, 0);
 #endif
 
 #ifdef ANNOT_CROSSBOW
-	drawRotationQuad(8 , -2 ,3,  0.1f, 1);
-	drawRotationQuad(12, -2 ,3,  0.1f, 1);
-	drawRotationQuad(12, -2,10,  0.1f, 1);
-	drawRotationQuad(8 ,-2 ,10, 0.1f, 1);
-	drawRotationQuad(8 , 2  ,3,   0.1f, 1);
-	drawRotationQuad(12, 2 ,3,   0.1f, 1);
-	drawRotationQuad(8,  2, 10, 0.1f, 1);
-	drawRotationQuad(12, 2 ,10,  0.1f, 1);
+	if(ANNOT_COUNT>0) drawRotationQuad(8 , -2 ,3,  0.1f, 1);
+	if(ANNOT_COUNT>1) drawRotationQuad(12, -2 ,3,  0.1f, 1);
+	if(ANNOT_COUNT>2) drawRotationQuad(12, -2,10,  0.1f, 1);
+	if(ANNOT_COUNT>3) drawRotationQuad(8 ,-2 ,10, 0.1f, 1);
+	if(ANNOT_COUNT>4) drawRotationQuad(8 , 2  ,3,   0.1f, 1);
+	if(ANNOT_COUNT>5) drawRotationQuad(12, 2 ,3,   0.1f, 1);
+	if(ANNOT_COUNT>6) drawRotationQuad(8,  2, 10, 0.1f, 1);
+	if(ANNOT_COUNT>7) drawRotationQuad(12, 2 ,10,  0.1f, 1);
 #endif
 
 //////////////////////////////// Thanks to Prof. FU //////////////////////////////////
 
 #ifdef ANNOT_CLAW
-	drawRotationQuad(1.947100f, 2.100000f, -2.276200f, 0.1f, 1);
-	drawRotationQuad(2.898100f, 2.100000f, -5.120300f, 0.1f, 1);
-	drawRotationQuad(6.742300f, 2.100000f, -7.175000f, 0.1f, 1);
-	drawRotationQuad(10.586400f, 2.100000f, -9.229500f, 0.1f, 1);
-	drawRotationQuad(14.433100f, 2.100000f, -11.267500f, 0.1f, 1);
+	if(ANNOT_COUNT>0) drawRotationQuad(1.947100f, 2.100000f, -2.276200f, 0.1f, 1);
+	if(ANNOT_COUNT>1) drawRotationQuad(2.898100f, 2.100000f, -5.120300f, 0.1f, 1);
+	if(ANNOT_COUNT>2) drawRotationQuad(6.742300f, 2.100000f, -7.175000f, 0.1f, 1);
+	if(ANNOT_COUNT>3) drawRotationQuad(10.586400f, 2.100000f, -9.229500f, 0.1f, 1);
+	if(ANNOT_COUNT>4) drawRotationQuad(14.433100f, 2.100000f, -11.267500f, 0.1f, 1);
 #endif
 
 #ifdef ANNOT_CHAIR_1
-	drawRotationQuad(0.000000f, 9.000000f, 2.900000f, 0.1f, 2);
-	drawRotationQuad(0.000000f, 1.000000f, 2.900000f, 0.1f, 2);
-	drawRotationQuad(6.000000f, 1.000000f, 2.900000f, 0.1f, 2);
-	drawRotationQuad(0.000000f, -1.000000f, 2.900000f, 0.1f, 2);
-	drawRotationQuad(6.000000f, -1.000000f, 2.900000f, 0.1f, 2);
-	drawRotationQuad(0.000000f, 9.000000f, -3.100000f, 0.1f, 2);
-	drawRotationQuad(0.000000f, 1.000000f, -3.100000f, 0.1f, 2);
-	drawRotationQuad(6.000000f, 1.000000f, -3.100000f, 0.1f, 2);
-	drawRotationQuad(0.000000f, -1.000000f, -3.100000f, 0.1f, 2);
-	drawRotationQuad(6.000000f, -1.000000f, -3.100000f, 0.1f, 2);
+	if(ANNOT_COUNT>0) drawRotationQuad(0.000000f, 9.000000f, 2.900000f, 0.1f, 2);
+	if(ANNOT_COUNT>1) drawRotationQuad(0.000000f, 1.000000f, 2.900000f, 0.1f, 2);
+	if(ANNOT_COUNT>2) drawRotationQuad(6.000000f, 1.000000f, 2.900000f, 0.1f, 2);
+	if(ANNOT_COUNT>3) drawRotationQuad(0.000000f, -1.000000f, 2.900000f, 0.1f, 2);
+	if(ANNOT_COUNT>4) drawRotationQuad(6.000000f, -1.000000f, 2.900000f, 0.1f, 2);
+	if(ANNOT_COUNT>5) drawRotationQuad(0.000000f, 9.000000f, -3.100000f, 0.1f, 2);
+	if(ANNOT_COUNT>6) drawRotationQuad(0.000000f, 1.000000f, -3.100000f, 0.1f, 2);
+	if(ANNOT_COUNT>7) drawRotationQuad(6.000000f, 1.000000f, -3.100000f, 0.1f, 2);
+	if(ANNOT_COUNT>8) drawRotationQuad(0.000000f, -1.000000f, -3.100000f, 0.1f, 2);
+	if(ANNOT_COUNT>9) drawRotationQuad(6.000000f, -1.000000f, -3.100000f, 0.1f, 2);
 #endif
 
 #ifdef ANNOT_CHAIR_2
-	drawRotationQuad(0.100000f, 9.000000f, 3.000000f, 0.1f, 0);
-	drawRotationQuad(0.100000f, 1.000000f, 3.000000f, 0.1f, 0);
-	drawRotationQuad(6.100000f, 1.000000f, 3.000000f, 0.1f, 0);
-	drawRotationQuad(0.100000f, -1.000000f, 3.000000f, 0.1f, 0);
-	drawRotationQuad(6.100000f, -1.000000f, 3.000000f, 0.1f, 0);
-	drawRotationQuad(0.100000f, 9.000000f, -3.000000f, 0.1f, 0);
-	drawRotationQuad(0.100000f, 1.000000f, -3.000000f, 0.1f, 0);
-	drawRotationQuad(6.100000f, 1.000000f, -3.000000f, 0.1f, 0);
-	drawRotationQuad(0.100000f, -1.000000f, -3.000000f, 0.1f, 0);
-	drawRotationQuad(6.100000f, -1.000000f, -3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>0) drawRotationQuad(0.100000f, 9.000000f, 3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>1) drawRotationQuad(0.100000f, 1.000000f, 3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>2) drawRotationQuad(6.100000f, 1.000000f, 3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>3) drawRotationQuad(0.100000f, -1.000000f, 3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>4) drawRotationQuad(6.100000f, -1.000000f, 3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>5) drawRotationQuad(0.100000f, 9.000000f, -3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>6) drawRotationQuad(0.100000f, 1.000000f, -3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>7) drawRotationQuad(6.100000f, 1.000000f, -3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>8) drawRotationQuad(0.100000f, -1.000000f, -3.000000f, 0.1f, 0);
+	if(ANNOT_COUNT>9) drawRotationQuad(6.100000f, -1.000000f, -3.000000f, 0.1f, 0);
 #endif
 
 #ifdef ANNOT_SEASAW
-	drawRotationQuad(0.000000f, 1.900000f, 0.000000f, 0.1f, 1);
-	drawRotationQuad(0.000000f, -2.100000f, 0.000000f, 0.1f, 1);
+	if(ANNOT_COUNT>0) drawRotationQuad(0.000000f, 1.900000f, 0.000000f, 0.1f, 1);
+	if(ANNOT_COUNT>1) drawRotationQuad(0.000000f, -2.100000f, 0.000000f, 0.1f, 1);
 #endif 
 
 #ifdef ANNOT_LAMP
-	drawRotationQuad(-1.000000f, -0.100000f, 23.000000f, 0.1f, 1);
-	drawRotationQuad(1.000000f, -0.100000f, 23.000000f, 0.1f, 1);
-	drawRotationQuad(-1.000000f, -0.100000f, -1.000000f, 0.1f, 1);
-	drawRotationQuad(1.000000f, -0.100000f, -1.000000f, 0.1f, 1);
-	drawRotationQuad(-1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
-	drawRotationQuad(1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
+	if (ANNOT_COUNT>0) drawRotationQuad(-1.000000f, -0.100000f, 23.000000f, 0.1f, 1);
+	if (ANNOT_COUNT>1) drawRotationQuad(1.000000f, -0.100000f, 23.000000f, 0.1f, 1);
+	if (ANNOT_COUNT>2) drawRotationQuad(-1.000000f, -0.100000f, -1.000000f, 0.1f, 1);
+	if (ANNOT_COUNT>3) drawRotationQuad(1.000000f, -0.100000f, -1.000000f, 0.1f, 1);
+	if (ANNOT_COUNT>4) drawRotationQuad(-1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
+	if (ANNOT_COUNT>5) drawRotationQuad(1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
 #endif
 
 }

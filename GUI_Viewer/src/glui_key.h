@@ -25,6 +25,7 @@
 
 extern void keyboard ( unsigned char key, int x, int y ) ;
 extern void specKey  ( int key,           int x, int y ) ;
+extern unsigned int ANNOT_COUNT;
 
 
 

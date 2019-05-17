@@ -49,6 +49,8 @@
 
   extern int showAxes ;
 
+  unsigned int ANNOT_COUNT = 0;
+
 
 
 
@@ -195,6 +197,15 @@ keyboard ( unsigned char key, int x, int y )
 		  break;
 	  case 26:
 		  undoAction();
+		  break;
+
+	  case 54: //'6'
+		  printf("666666666\n");
+		  ANNOT_COUNT++;
+		  break;
+	  case 52: //'4'
+		  printf("444444444\n");
+		  ANNOT_COUNT = 0;
 		  break;
 
       default:
