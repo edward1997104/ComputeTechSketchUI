@@ -72,6 +72,9 @@
   const float SELECTED_SPHERE_SIZE = 0.05f;
   const float POSSIBLE_SPHERE_SIZE = 0.02f;
   GLuint rotation_tex = 0;
+
+  std::vector<Point_t> drawnQuads;
+
 void setRotationGridTexture()
   {
 	  GLuint tex_2d = SOIL_load_OGL_texture
@@ -434,12 +437,24 @@ drawLineSet()
 			for (unsigned int j = 0; j < currentLineSet->lineSet[i]->intPoint.size(); j++)
 			{
 				glDisable(GL_LIGHTING);
-				glColor3f(0.902f, 0.902f, 0.980f);
+				{//mahou
+					auto absDiff = [](float x, float y) -> float{return fabsf(x - y); };
+					bool switchColor = false;
+					const auto &currentPoint = *(currentLineSet->lineSet[i]->intPoint[j]);
+					for (const auto &point : drawnQuads){
+						if (absDiff(point.x, currentPoint.x) + absDiff(point.y, currentPoint.y) + absDiff(point.z, currentPoint.z) < 0.011f){
+							switchColor = true;
+							break;
+						}
+					}
+					if (switchColor) glColor3f(0.0f, 1.0f, 0.0f);
+					else glColor3f(0.802f, 0.802f, 0.880f);
+				}
 				glPushMatrix();
 				glTranslated(currentLineSet->lineSet[i]->intPoint[j]->x,
 					currentLineSet->lineSet[i]->intPoint[j]->y,
 					currentLineSet->lineSet[i]->intPoint[j]->z);
-				glutSolidSphere(POSSIBLE_SPHERE_SIZE, 50, 50);
+				glutSolidSphere(POSSIBLE_SPHERE_SIZE, 40, 40);
 				glPopMatrix();
 				glEnable(GL_LIGHTING);
 			}
@@ -485,6 +500,8 @@ void drawRotationQuad(float x, float y, float z, float size, int axis)
 	glDepthMask( GL_FALSE );
 	glBegin(GL_QUADS);
 
+	const Point_t tmpPoint = { x, y, z };
+	drawnQuads.push_back(tmpPoint);
 
 	if (axis == 0)
 	{
@@ -550,6 +567,8 @@ drawFrame()
 	drawLineSet();
 
 	drawSelectedPoint();
+
+	drawnQuads.clear();
 
 #ifdef ANNOT_BIRD
 	if(ANNOT_COUNT>0) drawRotationQuad(-7.8,-3, 1, 0.1f, 0);
