@@ -35,6 +35,8 @@
 #include "glui.h"
 #include <SOIL.h>
 
+#define DO_NOT_SELECT
+
 ///////////////////////////////////////////////////////////////
 // EXTERNAL VARIABLES
 ///////////////////////////////////////////////////////////////
@@ -408,6 +410,9 @@ drawLineSet()
 			glColor3f(0.0f, 0.0f, 0.0f);
 		else
 			glColor3f(1.0f, 0.843f, 0.0f);
+#ifdef DO_NOT_SELECT
+		glColor3f(0.0f, 0.0f, 0.0f);
+#endif
 		glVertex3f(currentLineSet->lineSet[i]->endpoint[0]->x + delta, currentLineSet->lineSet[i]->endpoint[0]->y, currentLineSet->lineSet[i]->endpoint[0]->z);
 		glVertex3f(currentLineSet->lineSet[i]->endpoint[1]->x + delta, currentLineSet->lineSet[i]->endpoint[1]->y, currentLineSet->lineSet[i]->endpoint[1]->z);
 
@@ -639,6 +644,7 @@ drawFrame()
 	if (ANNOT_COUNT>4) drawRotationQuad(-1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
 	if (ANNOT_COUNT>5) drawRotationQuad(1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
 #endif
+
 
 	glutPostRedisplay();
 }
