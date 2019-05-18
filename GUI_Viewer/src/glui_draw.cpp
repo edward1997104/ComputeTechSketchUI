@@ -640,4 +640,5 @@ drawFrame()
 	if (ANNOT_COUNT>5) drawRotationQuad(1.000000f, -0.100000f, 11.000000f, 0.1f, 1);
 #endif
 
+	glutPostRedisplay();
 }
