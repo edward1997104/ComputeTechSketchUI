@@ -594,6 +594,17 @@ buildInterface()
     rolloutList[nRolloutList++] = (GLUI_Rollout *) rollout2;
 
 
+	glui->add_separator(false,0);
+
+    GLUI_Rollout *rollout3 = glui->add_rollout("[L]ego Control",false);
+    rollout3->set_w( 177, true );
+
+    addAppPanel(rollout3);
+
+    // add to rollout list
+    rolloutChar[nRolloutList] = 'L';
+    rolloutList[nRolloutList++] = (GLUI_Rollout *) rollout3;
+
     ///////////////////////////////////////////
     // (4) Status Bar
 
